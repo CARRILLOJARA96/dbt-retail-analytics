@@ -1,0 +1,7 @@
+pedido_id,cliente_id,fecha_pedido,estado,canal
+1001,1,2024-01-10,entregado,web
+1002,2,2024-01-12,entregado,app
+1003,1,2024-02-05,entregado,web
+1004,3,2024-03-15,pendiente,telefono
+1005,4,2024-04-20,entregado,web
+1006,5,2024-05-02,cancelado,app

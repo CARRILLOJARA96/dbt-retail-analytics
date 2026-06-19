@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_clientes
+    description: "Clientes estandarizados desde la fuente cruda."
+    columns:
+      - name: cliente_id
+        description: "Identificador único del cliente."
+        tests:
+          - not_null
+          - unique
+  - name: stg_pedidos
+    description: "Pedidos estandarizados."
+    columns:
+      - name: pedido_id
+        tests: [not_null]
+      - name: cliente_id
+        tests: [not_null]
+  - name: stg_pedido_items
+    description: "Líneas de pedido estandarizadas."
+    columns:
+      - name: pedido_id
+        tests: [not_null]
+      - name: producto_id
+        tests: [not_null]

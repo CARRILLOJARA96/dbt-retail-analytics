@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: dim_clientes
+    description: "Dimensión de clientes con surrogate key generada por macro."
+    columns:
+      - name: cliente_sk
+        tests: [not_null, unique]
+      - name: cliente_id
+        tests: [not_null, unique]
+  - name: fct_ventas
+    description: "Hechos de ventas a nivel de línea de pedido (materialización incremental)."
+    columns:
+      - name: venta_id
+        tests: [not_null, unique]
+      - name: cliente_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_clientes')
+              field: cliente_id

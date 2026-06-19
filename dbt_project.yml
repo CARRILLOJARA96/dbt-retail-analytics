@@ -1,0 +1,26 @@
+name: 'retail_analytics'
+version: '1.0.0'
+config-version: 2
+profile: 'retail_analytics'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+on-run-start:
+  - "create schema if not exists raw"
+  - "create or replace table raw.clientes as select * from read_csv_auto('raw_data/clientes.csv', header=true)"
+  - "create or replace table raw.pedidos as select * from read_csv_auto('raw_data/pedidos.csv', header=true)"
+  - "create or replace table raw.pedido_items as select * from read_csv_auto('raw_data/pedido_items.csv', header=true)"
+
+models:
+  retail_analytics:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table
