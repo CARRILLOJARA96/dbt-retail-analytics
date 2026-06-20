@@ -1,0 +1,119 @@
+version: 2
+
+models:
+  # --- ERP ---
+  - name: brz_clientes
+    description: "Clientes estandarizados desde el ERP."
+    columns:
+      - name: cliente_id
+        description: "Identificador único del cliente."
+        tests: [not_null, unique]
+  - name: brz_pedidos
+    description: "Pedidos estandarizados desde el ERP."
+    columns:
+      - name: pedido_id
+        description: "Identificador único del pedido."
+        tests: [not_null, unique]
+      - name: cliente_id
+        description: "FK al cliente."
+        tests: [not_null]
+      - name: tienda_id
+        description: "FK a la tienda."
+        tests: [not_null]
+      - name: estado
+        description: "Estado del pedido."
+        tests:
+          - accepted_values:
+              values: ['entregado', 'pendiente', 'cancelado']
+      - name: canal
+        description: "Canal de venta."
+        tests:
+          - accepted_values:
+              values: ['web', 'app', 'telefono']
+  - name: brz_pedido_items
+    description: "Líneas de pedido estandarizadas desde el ERP."
+    columns:
+      - name: pedido_id
+        description: "FK al pedido."
+        tests: [not_null]
+      - name: producto_id
+        description: "FK al producto."
+        tests: [not_null]
+      - name: descuento
+        description: "Descuento aplicado."
+        tests: [not_null]
+  - name: brz_tiendas
+    description: "Tiendas estandarizadas."
+    columns:
+      - name: tienda_id
+        description: "Identificador único de la tienda."
+        tests: [not_null, unique]
+      - name: formato
+        description: "Formato comercial."
+        tests:
+          - accepted_values:
+              values: ['Supermercado', 'Express', 'Online']
+  - name: brz_devoluciones
+    description: "Devoluciones estandarizadas."
+    columns:
+      - name: devolucion_id
+        description: "Identificador único de la devolución."
+        tests: [not_null, unique]
+      - name: pedido_id
+        tests: [not_null]
+      - name: producto_id
+        tests: [not_null]
+      - name: motivo
+        description: "Motivo de la devolución."
+        tests:
+          - accepted_values:
+              values: ['producto_danado', 'error_pedido', 'no_satisfecho']
+
+  # --- CRM ---
+  - name: brz_crm_clientes
+    description: "Clientes estandarizados desde el CRM."
+    columns:
+      - name: cliente_id
+        description: "Identificador único del cliente (compartido con ERP)."
+        tests: [not_null, unique]
+      - name: email
+        description: "Email de contacto."
+        tests: [not_null]
+      - name: tipo_cliente
+        description: "Clasificación CRM del cliente."
+        tests:
+          - accepted_values:
+              values: ['Corporativo', 'Retail', 'Personal']
+
+  # --- E-commerce ---
+  - name: brz_ecommerce_productos
+    description: "Productos exclusivos del e-commerce (digitales, packs, suscripciones)."
+    columns:
+      - name: producto_id
+        description: "Identificador único del producto."
+        tests: [not_null, unique]
+  - name: brz_ecommerce_pedidos
+    description: "Pedidos del canal e-commerce."
+    columns:
+      - name: pedido_id
+        description: "Identificador único del pedido."
+        tests: [not_null, unique]
+      - name: cliente_id
+        tests: [not_null]
+      - name: estado
+        description: "Estado del pedido."
+        tests:
+          - accepted_values:
+              values: ['entregado', 'pendiente', 'cancelado']
+      - name: metodo_pago
+        description: "Método de pago online."
+        tests:
+          - accepted_values:
+              values: ['tarjeta', 'yape', 'plin', 'transferencia']
+  - name: brz_ecommerce_pedido_items
+    description: "Líneas de pedido del e-commerce con cupones."
+    columns:
+      - name: pedido_id
+        tests: [not_null]
+      - name: producto_id
+        tests: [not_null]

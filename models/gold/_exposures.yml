@@ -1,0 +1,30 @@
+version: 2
+
+exposures:
+  - name: dashboard_ventas
+    label: "Dashboard de Ventas Retail"
+    type: dashboard
+    maturity: high
+    url: https://looker.example.com/dashboards/ventas
+    description: "Tablero de ventas para el equipo comercial."
+    depends_on:
+      - ref('fct_ventas')
+      - ref('dim_clientes')
+      - ref('dim_productos')
+      - ref('dim_tiendas')
+    owner:
+      name: Ernesto Carrillo Jara
+      email: ernestocarrilloj96@gmail.com
+  - name: reporte_devoluciones
+    label: "Reporte de Devoluciones"
+    type: analysis
+    maturity: medium
+    url: https://looker.example.com/reports/devoluciones
+    description: "Análisis de devoluciones por producto, tienda y motivo."
+    depends_on:
+      - ref('fct_devoluciones')
+      - ref('dim_productos')
+      - ref('dim_tiendas')
+    owner:
+      name: Ernesto Carrillo Jara
+      email: ernestocarrilloj96@gmail.com

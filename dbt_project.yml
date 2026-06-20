@@ -15,12 +15,23 @@ on-run-start:
   - "create or replace table raw.clientes as select * from read_csv_auto('raw_data/clientes.csv', header=true)"
   - "create or replace table raw.pedidos as select * from read_csv_auto('raw_data/pedidos.csv', header=true)"
   - "create or replace table raw.pedido_items as select * from read_csv_auto('raw_data/pedido_items.csv', header=true)"
+  - "create or replace table raw.tiendas as select * from read_csv_auto('raw_data/tiendas.csv', header=true)"
+  - "create or replace table raw.devoluciones as select * from read_csv_auto('raw_data/devoluciones.csv', header=true)"
+  - "create or replace table raw.crm_clientes as select * from read_csv_auto('raw_data/crm_clientes.csv', header=true)"
+  - "create or replace table raw.ecommerce_productos as select * from read_csv_auto('raw_data/ecommerce_productos.csv', header=true)"
+  - "create or replace table raw.ecommerce_pedidos as select * from read_csv_auto('raw_data/ecommerce_pedidos.csv', header=true)"
+  - "create or replace table raw.ecommerce_pedido_items as select * from read_csv_auto('raw_data/ecommerce_pedido_items.csv', header=true)"
 
 models:
   retail_analytics:
-    staging:
+    bronze:
       +materialized: view
-    intermediate:
-      +materialized: view
-    marts:
+    silver:
+      hubs:
+        +materialized: table
+      links:
+        +materialized: table
+      satellites:
+        +materialized: table
+    gold:
       +materialized: table

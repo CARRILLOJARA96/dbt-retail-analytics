@@ -1,0 +1,9 @@
+pedido_id,cliente_id,fecha_pedido,estado,metodo_pago
+2001,1,2024-03-10,entregado,tarjeta
+2002,9,2024-04-15,entregado,yape
+2003,2,2024-05-20,entregado,tarjeta
+2004,10,2024-06-01,pendiente,plin
+2005,3,2024-06-15,entregado,tarjeta
+2006,9,2024-07-10,entregado,yape
+2007,10,2024-08-01,cancelado,tarjeta
+2008,1,2024-08-20,entregado,transferencia

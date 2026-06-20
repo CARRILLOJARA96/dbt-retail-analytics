@@ -1,0 +1,28 @@
+version: 2
+
+seeds:
+  - name: categorias
+    description: "Catálogo de categorías de productos."
+    columns:
+      - name: categoria_id
+        description: "Identificador único de la categoría."
+        tests: [not_null, unique]
+      - name: categoria_nombre
+        description: "Nombre de la categoría."
+        tests: [not_null]
+  - name: productos
+    description: "Catálogo de productos."
+    columns:
+      - name: producto_id
+        description: "Identificador único del producto."
+        tests: [not_null, unique]
+      - name: producto_nombre
+        description: "Nombre del producto."
+        tests: [not_null]
+      - name: categoria_id
+        description: "FK a la categoría del producto."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('categorias')
+              field: categoria_id

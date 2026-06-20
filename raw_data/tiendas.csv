@@ -1,0 +1,8 @@
+tienda_id,nombre_tienda,region,ciudad,formato,fecha_apertura
+1,Plaza Lima Norte,Costa,Lima,Supermercado,2020-03-15
+2,Express Miraflores,Costa,Lima,Express,2021-07-01
+3,Mall Trujillo,Costa,Trujillo,Supermercado,2021-11-20
+4,Centro Piura,Costa,Piura,Supermercado,2022-05-10
+5,Express Arequipa,Sierra,Arequipa,Express,2023-01-08
+6,Plaza Cusco,Sierra,Cusco,Supermercado,2023-06-15
+7,Tienda Online,Nacional,Lima,Online,2023-09-01

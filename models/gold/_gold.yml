@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: dim_clientes
+    description: "Dimensión de clientes integrada (ERP + CRM) con métricas de comportamiento."
+    columns:
+      - name: cliente_sk
+        description: "Surrogate key del cliente."
+        tests: [not_null, unique]
+      - name: cliente_id
+        description: "Identificador natural del cliente."
+        tests: [not_null, unique]
+      - name: origen_datos
+        description: "Fuentes que aportan datos del cliente."
+        tests:
+          - accepted_values:
+              values: ['ERP + CRM', 'Solo ERP', 'Solo CRM']
+  - name: dim_productos
+    description: "Dimensión de productos integrada (seeds + e-commerce exclusivos)."
+    columns:
+      - name: producto_sk
+        description: "Surrogate key del producto."
+        tests: [not_null, unique]
+      - name: producto_id
+        description: "Identificador natural del producto."
+        tests: [not_null, unique]
+      - name: tipo_producto
+        description: "Físico (tienda) o Digital (e-commerce exclusivo)."
+        tests:
+          - accepted_values:
+              values: ['Fisico', 'Digital']
+  - name: dim_tiendas
+    description: "Dimensión de tiendas incluyendo tienda online."
+    columns:
+      - name: tienda_sk
+        tests: [not_null, unique]
+      - name: tienda_id
+        tests: [not_null, unique]
+      - name: formato
+        tests:
+          - accepted_values:
+              values: ['Supermercado', 'Express', 'Online']
+  - name: fct_ventas
+    description: "Hechos de ventas unificados (ERP + e-commerce) con trazabilidad de origen."
+    columns:
+      - name: venta_id
+        tests: [not_null, unique]
+      - name: cliente_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_clientes')
+              field: cliente_id
+      - name: tienda_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_tiendas')
+              field: tienda_id
+      - name: producto_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_productos')
+              field: producto_id
+  - name: fct_devoluciones
+    description: "Hechos de devoluciones con monto y motivo."
+    columns:
+      - name: devolucion_sk
+        tests: [not_null, unique]
+      - name: pedido_id
+        tests: [not_null]
+      - name: cliente_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_clientes')
+              field: cliente_id

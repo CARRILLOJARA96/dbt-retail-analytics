@@ -1,0 +1,8 @@
+cliente_id,nombre_completo,tipo_cliente,email,telefono,fecha_alta_crm
+1,Comercial Lima SAC,Corporativo,comercial.lima@email.com,+51-1-555-0001,2023-02-01
+2,Bodega Surco,Retail,bodega.surco@email.com,+51-1-555-0002,2023-04-15
+3,Minimarket Trujillo,Retail,minimarket.trujillo@email.com,+51-44-555-0003,2023-06-01
+5,Bodega Centro,Retail,bodega.centro@email.com,+51-54-555-0005,2024-07-01
+6,Supermercado Cusco,Corporativo,super.cusco@email.com,+51-84-555-0006,2023-09-01
+9,Juan Perez Online,Personal,juan.perez@email.com,+51-1-555-0009,2024-09-01
+10,Maria Garcia Digital,Personal,maria.garcia@email.com,+51-1-555-0010,2024-10-15

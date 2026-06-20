@@ -1,0 +1,153 @@
+version: 2
+
+models:
+  # --- Hubs (multi-source) ---
+  - name: hub_clientes
+    description: "Hub de clientes — business keys de ERP y CRM."
+    columns:
+      - name: hub_cliente_hk
+        description: "Hash key del cliente."
+        tests: [not_null, unique]
+      - name: cliente_id
+        description: "Business key natural."
+        tests: [not_null, unique]
+
+  - name: hub_productos
+    description: "Hub de productos — business keys de seeds y e-commerce."
+    columns:
+      - name: hub_producto_hk
+        description: "Hash key del producto."
+        tests: [not_null, unique]
+      - name: producto_id
+        description: "Business key natural."
+        tests: [not_null, unique]
+
+  - name: hub_tiendas
+    description: "Hub de tiendas — incluye tienda online."
+    columns:
+      - name: hub_tienda_hk
+        tests: [not_null, unique]
+      - name: tienda_id
+        tests: [not_null, unique]
+
+  - name: hub_pedidos
+    description: "Hub de pedidos — business keys de ERP y e-commerce."
+    columns:
+      - name: hub_pedido_hk
+        tests: [not_null, unique]
+      - name: pedido_id
+        tests: [not_null, unique]
+
+  # --- Links (multi-source) ---
+  - name: lnk_pedido_cliente
+    description: "Link pedido-cliente desde ERP y e-commerce."
+    columns:
+      - name: lnk_pedido_cliente_hk
+        tests: [not_null, unique]
+      - name: hub_pedido_hk
+        tests: [not_null]
+      - name: hub_cliente_hk
+        tests: [not_null]
+
+  - name: lnk_pedido_tienda
+    description: "Link pedido-tienda desde ERP y e-commerce (tienda_id=7 para online)."
+    columns:
+      - name: lnk_pedido_tienda_hk
+        tests: [not_null, unique]
+      - name: hub_pedido_hk
+        tests: [not_null]
+      - name: hub_tienda_hk
+        tests: [not_null]
+
+  - name: lnk_pedido_producto
+    description: "Link pedido-producto desde ERP y e-commerce."
+    columns:
+      - name: lnk_pedido_producto_hk
+        tests: [not_null, unique]
+      - name: hub_pedido_hk
+        tests: [not_null]
+      - name: hub_producto_hk
+        tests: [not_null]
+
+  # --- Satellites ERP ---
+  - name: sat_clientes_erp
+    description: "Satélite de clientes desde ERP — segmento, ciudad."
+    columns:
+      - name: hub_cliente_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
+
+  - name: sat_productos_erp
+    description: "Satélite de productos desde seeds — nombre, categoría."
+    columns:
+      - name: hub_producto_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
+
+  - name: sat_pedidos_erp
+    description: "Satélite de pedidos ERP — fecha, estado, canal."
+    columns:
+      - name: hub_pedido_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
+
+  - name: sat_pedido_items_erp
+    description: "Satélite de líneas de pedido ERP — cantidad, precio, descuento."
+    columns:
+      - name: lnk_pedido_producto_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
+
+  - name: sat_tiendas
+    description: "Satélite de tiendas — atributos descriptivos."
+    columns:
+      - name: hub_tienda_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
+
+  - name: sat_devoluciones
+    description: "Satélite de devoluciones — cantidad, motivo, fecha."
+    columns:
+      - name: lnk_pedido_producto_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
+
+  # --- Satellites CRM ---
+  - name: sat_clientes_crm
+    description: "Satélite de clientes desde CRM — email, tipo, teléfono."
+    columns:
+      - name: hub_cliente_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
+
+  # --- Satellites E-commerce ---
+  - name: sat_productos_ecom
+    description: "Satélite de productos exclusivos e-commerce — nombre, categoría, precio base."
+    columns:
+      - name: hub_producto_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
+
+  - name: sat_pedidos_ecom
+    description: "Satélite de pedidos e-commerce — fecha, estado, método de pago."
+    columns:
+      - name: hub_pedido_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
+
+  - name: sat_pedido_items_ecom
+    description: "Satélite de líneas e-commerce — cantidad, precio, descuento, cupón."
+    columns:
+      - name: lnk_pedido_producto_hk
+        tests: [not_null]
+      - name: hashdiff
+        tests: [not_null]
